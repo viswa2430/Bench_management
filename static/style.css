@@ -1,0 +1,107 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0; padding: 0;
+    background: #f4f7f8;
+    color: #333;
+}
+
+header {
+    background-color: #2c3e50;
+    color: white;
+    padding: 20px 40px;
+}
+
+header h1 {
+    margin: 0; font-size: 28px;
+}
+
+nav a {
+    color: #ecf0f1;
+    text-decoration: none;
+    margin-right: 20px;
+    font-weight: bold;
+}
+
+nav a:hover {
+    color: #f39c12;
+}
+
+.content {
+    padding: 20px 40px;
+}
+
+.card {
+    background: white;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+h2 {
+    color: #2c3e50;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: #3498db;
+    color: white;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.btn {
+    background-color: #3498db;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #2980b9;
+}
+
+footer {
+    text-align: center;
+    padding: 15px;
+    background: #2c3e50;
+    color: white;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
+/* Highlight top 3 matched consultants */
+li.highest { 
+    background-color: #2ecc71; 
+    color: white; 
+    padding: 5px; 
+    border-radius: 5px; 
+}
+li.medium { 
+    background-color: #f1c40f; 
+    color: white; 
+    padding: 5px; 
+    border-radius: 5px; 
+}
+li.lowest { 
+    background-color: #e74c3c; 
+    color: white; 
+    padding: 5px; 
+    border-radius: 5px; 
+}
+

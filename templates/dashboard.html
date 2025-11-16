@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+<h2>Dashboard</h2>
+<p>Total Consultants: {{ total }}</p>
+<p>Available Consultants: {{ available_count }}</p>
+<p>Bench Utilization: {{ utilization | round(2) }}%</p>
+
+<table>
+<tr><th>Name</th><th>Skills</th><th>Available</th></tr>
+{% for c in consultants %}
+<tr>
+  <td>{{ c.name }}</td>
+  <td>{{ c.skills | join(', ') }}</td>
+  <td>{{ '✅' if c.available else '❌' }}</td>
+</tr>
+{% endfor %}
+</table>
+</div>
+{% endblock %}
