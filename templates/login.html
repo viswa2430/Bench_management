@@ -12,3 +12,21 @@
   </form>
 </div>
 {% endblock %}
+{% extends "base.html" %}
+
+{% block content %}
+<div class="login-page">
+  <div class="card">
+    <h2>Login</h2>
+    <form method="post" action="{{ url_for('do_login') }}">
+      <label>User Type:</label>
+      <select name="user_type">
+        <option value="recruiter">Recruiter</option>
+        <option value="consultant">Consultant</option>
+      </select>
+      <br><br>
+      <button type="submit" class="btn">Login</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

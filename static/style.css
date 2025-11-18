@@ -50,7 +50,7 @@ nav a:hover {
 --------------------------*/
 .card {
     background: white;
-    width: 85%;
+    max-width: 400px;
     margin: 25px auto;
     padding: 25px;
     border-radius: 15px;
@@ -201,4 +201,25 @@ footer {
 .lowest {
     border: 2px solid #f39c12;
     background-color: #fff8e0;
+}
+
+.btn-small {
+    padding: 6px 12px;
+    font-size: 13px;
+    background-color: #2ecc71;
+    border-radius: 8px;
+    margin-left: 10px;
+}
+
+.btn-small:hover {
+    background-color: #27ae60;
+}
+
+/* Login page vertical centering */
+.login-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+    /* makes it take most of the viewport height */
 }

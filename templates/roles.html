@@ -35,3 +35,22 @@
 {% endfor %}
 
 {% endblock %}
+{% for role in roles %}
+<div class="match-block">
+  <h3>{{ role.role_name }} (Skills: {{ role.skills | join(', ') }})</h3>
+  <p>Top Matches:</p>
+  <ul class="match-list">
+    {% for c in matches[role.role_name] %}
+    <li data-score="{{ c.score }}">
+      {{ c.name }} - Skills: {{ c.skills | join(', ') }} (Score: {{ c.score }})
+      {% if session.get('user_type') == 'recruiter' %}
+      <form method="post" action="{{ url_for('assign_consultant', role_name=role.role_name, consultant_name=c.name) }}"
+        style="display:inline;">
+        <button type="submit" class="btn-small">Recruit</button>
+      </form>
+      {% endif %}
+    </li>
+    {% endfor %}
+  </ul>
+</div>
+{% endfor %}

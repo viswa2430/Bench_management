@@ -168,3 +168,17 @@ def roles():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+
+@app.route('/assign/<role_name>/<consultant_name>', methods=['POST'])
+def assign_consultant(role_name, consultant_name):
+    if 'user_type' not in session or session['user_type'] != 'recruiter':
+        return render_template('access_denied.html', message="❌ Only recruiters can assign consultants.")
+
+    consultants = load_data(CONSULTANTS_FILE)
+    for c in consultants:
+        if c['name'] == consultant_name:
+            c['available'] = False  # Mark as assigned
+            break
+    save_data(CONSULTANTS_FILE, consultants)
+    return redirect(url_for('roles'))
