@@ -1,27 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-<title>Bench Tracker</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <title>Bench Tracker</title>
 </head>
+
 <body>
-<header>
-  <h1>🏢 Bench Management Tracker</h1>
-  <nav>
-    <a href="{{ url_for('dashboard') }}">Dashboard</a>
-    <a href="{{ url_for('roles') }}">Open Roles</a>
-    <a href="{{ url_for('add_consultant') }}">Add Consultant</a>
-  </nav>
-</header>
-<hr>
-<main class="content">
-{% block content %}{% endblock %}
-</main>
-<footer>
-  <p>Bench Tracker &copy; 2025</p>
-</footer>
-<script src="{{ url_for('static', filename='script.js') }}"></script>
+  <header>
+    <h1>🏢 Bench Management Tracker</h1>
+
+    <nav>
+      {% if session.get('user_type') == 'recruiter' %}
+      <a href="{{ url_for('dashboard') }}">Dashboard</a>
+      <a href="{{ url_for('roles') }}">Open Roles</a>
+      {% endif %}
+
+      {% if session.get('user_type') == 'consultant' %}
+      <a href="{{ url_for('add_consultant') }}">Add Consultant</a>
+      {% endif %}
+
+      {% if session.get('user_type') %}
+      <a href="{{ url_for('logout') }}">Logout</a>
+      {% endif %}
+    </nav>
+  </header>
+
+  <main class="content">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer>
+    <p>Bench Tracker &copy; 2025</p>
+  </footer>
 </body>
+
 </html>

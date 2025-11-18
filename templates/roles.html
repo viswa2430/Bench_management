@@ -1,24 +1,37 @@
 {% extends "base.html" %}
-
 {% block content %}
+
 <div class="card">
-<h2>Open Roles</h2>
-<form method="post">
-  <label>Role Name:</label>
-  <input type="text" name="role_name" required><br><br>
-  <label>Required Skills (comma separated):</label>
-  <input type="text" name="skills" required><br><br>
-  <button type="submit" class="btn">Add Role</button>
-</form>
-<hr>
-{% for role in roles %}
-<h3>{{ role.role_name }} (Skills: {{ role.skills | join(', ') }})</h3>
-Top Matches:
-<ul>
-  {% for c in matches[role.role_name] %}
-    <li data-score="{{ c.score }}">{{ c.name }} - Skills: {{ c.skills | join(', ') }} (Score: {{ c.score }})</li>
-  {% endfor %}
-</ul>
-{% endfor %}
+  <h2>Open Roles</h2>
+
+  <form method="post">
+    <label>Role Name:</label>
+    <input type="text" name="role_name" required>
+
+    <label>Required Skills (comma separated):</label>
+    <input type="text" name="skills" required>
+
+    <button type="submit">Add Role</button>
+  </form>
 </div>
+
+{% for role in roles %}
+<div class="match-block">
+  <h3>{{ role.role_name }}</h3>
+  <p><strong>Required Skills:</strong> {{ role.skills | join(", ") }}</p>
+
+  <h4>Top Matches:</h4>
+
+  <ul class="match-list">
+    {% for c in matches[role.role_name] %}
+    <li class="match-card">
+      <strong>{{ c.name }}</strong><br>
+      Skills: {{ c.skills | join(", ") }}<br>
+      Score: {{ c.score }}
+    </li>
+    {% endfor %}
+  </ul>
+</div>
+{% endfor %}
+
 {% endblock %}

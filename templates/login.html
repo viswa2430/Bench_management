@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="card">
+<div class="card" style="max-width: 400px; text-align:center;">
   <h2>Login</h2>
   <form method="post" action="{{ url_for('do_login') }}">
     <label>User Type:</label>
@@ -8,7 +8,6 @@
       <option value="recruiter">Recruiter</option>
       <option value="consultant">Consultant</option>
     </select>
-    <br><br>
     <button type="submit" class="btn">Login</button>
   </form>
 </div>
