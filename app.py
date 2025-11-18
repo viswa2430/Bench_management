@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, session
 import json
 import os
 from functools import wraps
+from urllib.parse import unquote
 
 app = Flask(__name__)
 app.secret_key = "super_secret_key"
@@ -13,7 +14,6 @@ ROLES_FILE = 'data/roles.json'
 # ---------------------------
 # Helper Functions
 # ---------------------------
-
 def load_data(file):
     if not os.path.exists(file):
         return []
@@ -41,7 +41,6 @@ def match_candidates(role):
 # ---------------------------
 # Access Control Decorators
 # ---------------------------
-
 def login_required(f):
     @wraps(f)
     def decorated(*args, **kwargs):
@@ -55,7 +54,7 @@ def recruiter_only(f):
     @wraps(f)
     def decorated(*args, **kwargs):
         if session.get('user_type') != 'recruiter':
-            return "❌ Access Denied — Only Recruiters Allowed"
+            return render_template('access_denied.html', message="❌ Only recruiters can access this page.")
         return f(*args, **kwargs)
     return decorated
 
@@ -64,7 +63,7 @@ def consultant_only(f):
     @wraps(f)
     def decorated(*args, **kwargs):
         if session.get('user_type') != 'consultant':
-            return "❌ Access Denied — Only Consultants Allowed"
+            return render_template('access_denied.html', message="❌ Only consultants can access this page.")
         return f(*args, **kwargs)
     return decorated
 
@@ -72,7 +71,6 @@ def consultant_only(f):
 # ---------------------------
 # Login / Logout
 # ---------------------------
-
 @app.route('/')
 def login():
     return render_template('login.html')
@@ -98,12 +96,10 @@ def logout():
 # ---------------------------
 # Consultant Area
 # ---------------------------
-
 @app.route('/add_consultant', methods=['GET', 'POST'])
 @login_required
 @consultant_only
 def add_consultant():
-
     if request.method == 'POST':
         name = request.form['name']
         skills = [s.strip() for s in request.form['skills'].split(',')]
@@ -116,7 +112,6 @@ def add_consultant():
         })
 
         save_data(CONSULTANTS_FILE, consultants)
-
         return redirect(url_for('add_consultant'))
 
     return render_template('add_consultant.html')
@@ -125,7 +120,6 @@ def add_consultant():
 # ---------------------------
 # Recruiter Dashboard
 # ---------------------------
-
 @app.route('/dashboard')
 @login_required
 @recruiter_only
@@ -146,7 +140,6 @@ def dashboard():
 # ---------------------------
 # Recruiter: Roles & Matching
 # ---------------------------
-
 @app.route('/roles', methods=['GET', 'POST'])
 @login_required
 @recruiter_only
@@ -166,19 +159,25 @@ def roles():
     return render_template('roles.html', roles=roles_data, matches=matches)
 
 
-if __name__ == '__main__':
-    app.run(debug=True)
-
-
+# ---------------------------
+# Recruiter: Assign Consultant
+# ---------------------------
 @app.route('/assign/<role_name>/<consultant_name>', methods=['POST'])
+@login_required
+@recruiter_only
 def assign_consultant(role_name, consultant_name):
-    if 'user_type' not in session or session['user_type'] != 'recruiter':
-        return render_template('access_denied.html', message="❌ Only recruiters can assign consultants.")
-
+    consultant_name = unquote(consultant_name)
     consultants = load_data(CONSULTANTS_FILE)
+
     for c in consultants:
         if c['name'] == consultant_name:
             c['available'] = False  # Mark as assigned
             break
+
     save_data(CONSULTANTS_FILE, consultants)
     return redirect(url_for('roles'))
+
+
+# ---------------------------
+if __name__ == '__main__':
+    app.run(debug=True)
