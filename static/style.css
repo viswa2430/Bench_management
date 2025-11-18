@@ -50,8 +50,9 @@ nav a:hover {
 --------------------------*/
 .card {
     background: white;
-    max-width: 400px;
-    margin: 25px auto;
+    width: 90%;
+    /* dashboard card almost full width */
+    margin: 20px auto;
     padding: 25px;
     border-radius: 15px;
     box-shadow: 0 5px 16px rgba(0, 0, 0, 0.12);
@@ -105,22 +106,21 @@ table {
     margin-top: 20px;
 }
 
-table th {
-    background: #29378f;
-    color: white;
-    padding: 12px;
-    text-align: left;
-}
-
+/* Align dashboard table properly */
+table th,
 table td {
-    background: #f5f6fc;
-    padding: 12px;
-    border-bottom: 1px solid #ddd;
+    text-align: left;
+    /* ensures vertical alignment of text */
+    vertical-align: middle;
+    /* centers text vertically in cells */
+    padding: 12px 15px;
+    /* more breathing room */
 }
 
 table tr:hover td {
     background: #e9ecff;
 }
+
 
 /* -------------------------
  Roles Page - Matches
@@ -216,10 +216,24 @@ footer {
 }
 
 /* Login page vertical centering */
+/* Center login card vertically and horizontally */
 .login-page {
     display: flex;
     justify-content: center;
+    /* horizontal center */
     align-items: center;
-    min-height: 80vh;
-    /* makes it take most of the viewport height */
+    /* vertical center */
+    min-height: calc(100vh - 120px);
+    /* full viewport minus header/footer */
+    padding: 20px;
+}
+
+.login-page .card {
+    max-width: 450px;
+    /* make card bigger */
+    width: 100%;
+    padding: 30px;
+    text-align: center;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
 }
